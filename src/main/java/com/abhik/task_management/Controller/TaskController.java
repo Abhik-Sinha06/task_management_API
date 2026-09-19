@@ -30,9 +30,9 @@ public class TaskController {
         return ResponseEntity.ok(t);
     }
 
-    @PostMapping("/tasks")
-    ResponseEntity<Task> addTask(@Valid @RequestBody TaskRequestDTO tsk){
-        Task t=ts.addTask(tsk);
+    @PostMapping("/users/{userid}/tasks")
+    ResponseEntity<Task> addTask(@PathVariable int userid, @Valid @RequestBody TaskRequestDTO tsk){
+        Task t=ts.addTask(userid, tsk);
         return ResponseEntity.status(HttpStatus.CREATED).body(t);
     }
 
