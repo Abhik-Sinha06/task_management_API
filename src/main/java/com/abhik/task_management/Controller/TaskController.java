@@ -1,6 +1,7 @@
 package com.abhik.task_management.Controller;
 
 import com.abhik.task_management.Service.TaskService;
+import com.abhik.task_management.dto.TaskResponseDTO;
 import com.abhik.task_management.model.Task;
 import com.abhik.task_management.dto.TaskRequestDTO;
 import jakarta.validation.Valid;
@@ -20,25 +21,25 @@ public class TaskController {
     }
 
     @GetMapping("/tasks")
-    List<Task> fetch(){
+    List<TaskResponseDTO> fetch(){
         return ts.getTasks();
     }
 
     @GetMapping("/tasks/{id}")
-    ResponseEntity<Task> getSpecificTask(@PathVariable int id){
-        Task t=ts.getTaskbyId(id);
+    ResponseEntity<TaskResponseDTO> getSpecificTask(@PathVariable int id){
+        TaskResponseDTO t=ts.getTaskbyId(id);
         return ResponseEntity.ok(t);
     }
 
-    @PostMapping("/users/{userid}/tasks")
-    ResponseEntity<Task> addTask(@PathVariable int userid, @Valid @RequestBody TaskRequestDTO tsk){
-        Task t=ts.addTask(userid, tsk);
+    @PostMapping("/tasks")
+    ResponseEntity<TaskResponseDTO> addTask(@Valid @RequestBody TaskRequestDTO tsk){
+        TaskResponseDTO t=ts.addTask(tsk);
         return ResponseEntity.status(HttpStatus.CREATED).body(t);
     }
 
     @PutMapping("/tasks/{id}")
-    ResponseEntity<Task> updateTask(@PathVariable int id,@Valid @RequestBody TaskRequestDTO updatedTsk){
-        Task t=ts.updateTask(id,updatedTsk);
+    ResponseEntity<TaskResponseDTO> updateTask(@PathVariable int id,@Valid @RequestBody TaskRequestDTO updatedTsk){
+        TaskResponseDTO t=ts.updateTask(id,updatedTsk);
         return ResponseEntity.ok(t);
     }
 
